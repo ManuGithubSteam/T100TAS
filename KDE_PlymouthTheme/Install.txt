@@ -1,0 +1,15 @@
+
+KDE plymouth theme for T100TA
++++++++++++++++++++++++++++++++
+
+Install:
+----------
+
+
+cp -R kde-t100/ /usr/share/plymouth/themes/
+
+update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/kde-t100/kde-t100.plymouth 100
+
+update-alternatives --config default.plymouth
+
+update-initramfs -u

@@ -1,0 +1,12 @@
+
+This script needs python 3!
+
+Also it needs the python shell extension installed (locally).
+
+You can do it with:
+
+pip3 install shell
+
+Execute the script like this:
+
+./rc.py

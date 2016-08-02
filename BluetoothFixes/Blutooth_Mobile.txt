@@ -1,0 +1,46 @@
+Bluetooth Mobile Steps:
+
+To use bluetooth (send/recive files and music control) with your mobile on the TAS in KDE5, you need (on kde 5):
+
+Dependencies:
+
+bluez (to get it working)
+obex-data-server (for receiving files, and KIO's)
+obexd-client (for sending files)
+KDE SC 4.4 or greater
+PulseAudio, or a proper configured Alsa (with the bluetooth hook)
+
+Then you need to enable as root:
+
+systemctl --global enable obex
+systemctl enable bluetooth
+
+Next make sure to execute this as user: 
+
+/usr/local/libexec/bluetooth/obexd &
+
+If you use a bluetooth mouse you will also need the blue_ping.sh script as it pings the mouse so it will not loose connection in idle mode! It uses the MAC adress of the device for this.
+
+SOUND/MUSIC:
+###########
+
+Be warned: Playing sound over bluetooth is still sketchy, this is due to poor quality of the bluetooth driver and also hardware limitations (wifi and bluetooth on/in the same chip). On top of that the sound driver in the TAS is also not the most sofisticated and does not support a2dp. That makes it quite remarkable that sound even plays i think.
+
+To minimise/eliminate stuttering:
+
+- Add "tsched=0" to load-module module-udev-detect in /etc/pulse/default.pa, but you can also try without.
+- Do not use another bluetooth device at the same time as music playback as the many smaller packages of the mouse will disrupt the controler
+- Do use latency offset (2000 in the output device, and in the input phone device)
+- Also high CPU load does disrupt sound!
+- Usage and reload of the wlan module aka loading a demanding webpage will disrupt bt sound playback!
+- Use these values in daemon.conf:
+
+ resample-method = speex-float-1
+ enable-remixing = yes
+ high-priority = yes
+nice-level = -11
+ default-sample-format = s16le
+ default-sample-rate = 22100
+ alternate-sample-rate = 22100
+ default-fragments = 6 ;can also be 8
+ default-fragment-size-msec = 110 
